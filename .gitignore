@@ -1,1 +1,20 @@
+.venv/# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes Virtuais
 .venv/
+venv/
+env/
+ENV/
+
+
+# Ignora todo o conteúdo da pasta data
+data/*
+!data/.gitkeep
+
+# Modelos (Artefatos binários)
+model/*.pkl
+model/*.joblib
+

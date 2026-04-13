@@ -1,0 +1,37 @@
+name: Churn Model CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ml_workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o código para a máquina do GitHub
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Configura o Python (Criado com o Python 3.12)
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # 3. Instala as dependências 
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        
+
+      # 4. EXECUTAR O TREINO PRIMEIRO (Gera o .pkl)
+      - name: Train Model
+        run: python train.py
+
+      # 5. EXECUTAR OS TESTES DEPOIS (Valida se o arquivo está lá e se o Recall é bom)
+      - name: Run All Tests
+        run: pytest tests/
